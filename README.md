@@ -30,42 +30,37 @@ becomes C. To change a message back, each letter is replaced by the one three be
 ~~~
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+void caesarEncrypt(char *text, int key) {
+    for (int i = 0; text[i] != '\0'; i++) {
+        char c = text[i];
+        if (c >= 'A' && c <= 'Z') {
+            text[i] = ((c - 'A' + key) % 26 + 26) % 26 + 'A';
+        }
+        else if (c >= 'a' && c <= 'z') {
+            text[i] = ((c - 'a' + key) % 26 + 26) % 26 + 'a';
+        }
+    }
+}
+void caesarDecrypt(char *text, int key) {
+    caesarEncrypt(text, -key);
+}
 int main() {
- char message[100]; // Array to store the message
- int key;
- printf("Enter the message to encrypt: ");
- fgets(message, sizeof(message), stdin); // Read input from the user
- // Remove trailing newline from fgets
- message[strcspn(message, "\n")] = '\0';
- printf("Enter the Caesar Cipher key (an integer): ");
- scanf("%d", &key); // Read the key from the user
- // Encryption logic (directly in main)
- for (int i = 0; message[i] != '\0'; i++) {
- char c = message[i];
- if (c >= 'A' && c <= 'Z') {
- message[i] = ((c - 'A' + key) % 26 + 26) % 26 + 'A';
- } else if (c >= 'a' && c <= 'z') {
- message[i] = ((c - 'a' + key) % 26 + 26) % 26 + 'a';
- }
- }
- printf("Encrypted Message: %s\n", message);
- // Decryption logic (directly in main)
- for (int i = 0; message[i] != '\0'; i++) {
- char c = message[i];
- if (c >= 'A' && c <= 'Z') {
- message[i] = ((c - 'A' - key) % 26 + 26) % 26 + 'A';
- } else if (c >= 'a' && c <= 'z') {
- message[i] = ((c - 'a' - key) % 26 + 26) % 26 + 'a';
- }
- }
- printf("Decrypted Message: %s\n", message);
- return 0;
+    char message[100]; 
+    int key;
+    printf("Enter the message to encrypt: ");
+    fgets(message, sizeof(message), stdin);
+    printf("Enter the Caesar Cipher key (an integer): ");
+    scanf("%d", &key);
+    caesarEncrypt(message, key);
+    printf("Encrypted Message: %s", message);
+    caesarDecrypt(message, key);
+    printf("Decrypted Message: %s", message);
+    return 0;
 }
 ~~~
 
 ## OUTPUT :-
+![image](https://github.com/user-attachments/assets/3fb362ee-7462-4a61-9518-9eeae4fb5b0f)
 
-![447240152-2bbcf2d0-5f6a-4cbb-9470-2c8b61c9659e](https://github.com/user-attachments/assets/84ed54d1-95c8-4413-ab06-600bb2c60119)
 ## RESULT:
 The program is executed successfully
